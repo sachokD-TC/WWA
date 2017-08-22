@@ -36,6 +36,7 @@ class Wwa():
         self.pick_sound = pygame.mixer.Sound('sounds/pick.wav')
         self.hit_sound = pygame.mixer.Sound('sounds/hit.wav')
         self.over_sound = pygame.mixer.Sound('sounds/over.wav')
+        self.finish_background = pygame.image.load('pic/menu.png')
         self.main_loop()
 
     def put_text(self, t, font_name, font_size, x, y):
@@ -70,6 +71,11 @@ class Wwa():
         pygame.display.update()
         pygame.time.delay(3000)
 
+    def show_finish(self):
+        self.game_display.blit(self.finish_background, (190, 100))
+        pygame.display.update()
+        pygame.time.delay(3000)
+
     def main_loop(self):
         self.block = Cowboy(pygame.Color(153, 0, 0), 32, 32)
         self.background = pygame.Surface((42 * 32, 42 * 32))
@@ -86,6 +92,12 @@ class Wwa():
             for layer in self.pytmx_map.visible_layers:
                 layer_index += 1
                 if isinstance(layer, pytmx.TiledObjectGroup):
+                    if layer.name == 'exit':
+                        for obj in layer:
+                            collision_rect = pygame.Rect(self.block.rect.x, self.block.rect.y, 32, 32)
+                            if pygame.Rect(obj.x + self.block.pos_x, obj.y + self.block.pos_y, obj.width,
+                                           obj.height).colliderect(collision_rect) == True:
+                                self.show_finish()
                     if layer.name == 'pic_objs':
                         for obj in layer:
                             collision_rect = pygame.Rect(self.block.rect.x, self.block.rect.y, 32, 32)
@@ -113,6 +125,7 @@ class Wwa():
                                     pygame.time.delay(3000)
                                     self.loop = False
                                 break
+
 
             self.block.update(event)
             self.game_display.blit(self.pics, (self.block.pos_x, self.block.pos_y))
