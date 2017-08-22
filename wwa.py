@@ -3,6 +3,7 @@ import pygame
 from pytmx.util_pygame import load_pygame
 from players.cowboy import Cowboy
 
+
 WIN_WIDTH = 800
 WIN_HEIGHT = 800
 
@@ -11,6 +12,11 @@ SCORE_POS_Y = 750
 
 LEVEL_POS_X = 250
 LEVEL_POS_Y = 400
+
+SCORE_COUNT_POS_X = SCORE_POS_X + 220
+SCORE_AND_CACTUS_POS_Y = SCORE_POS_Y + 5
+CACTUS_COUNT_POS_X = SCORE_POS_X + 80
+
 
 red = pygame.Color(153, 0, 0)
 
@@ -32,21 +38,17 @@ class Wwa():
         self.over_sound = pygame.mixer.Sound('sounds/over.wav')
         self.main_loop()
 
+    def put_text(self, t, font_name, font_size, x, y):
+        font = pygame.font.SysFont(font_name, font_size)
+        text = font.render(str(t), True, (255, 255, 255))
+        self.game_display.blit(text, (x, y))
+
     def step_back(self, block):
         block.rect.x -= block.movement_dict[block.movement][0]
         block.rect.y -= block.movement_dict[block.movement][1]
         block.pos_x += block.movement_dict[block.movement][0]
         block.pos_y += block.movement_dict[block.movement][1]
 
-    def life_dec(self, life):
-        font = pygame.font.SysFont("JOKERMAN", 25)
-        text = font.render(str(life), True, (255, 255, 255))
-        self.game_display.blit(text, (SCORE_POS_X + 220, SCORE_POS_Y + 5))
-
-    def cactus_inc(self, cactus):
-        font = pygame.font.SysFont("JOKERMAN", 25)
-        text = font.render(str(cactus), True, (255, 255, 255))
-        self.game_display.blit(text, (SCORE_POS_X + 80, SCORE_POS_Y + 5))
 
     def redraw_pics(self):
         for layer in self.pytmx_map.visible_layers:
@@ -64,9 +66,7 @@ class Wwa():
         self.game_display.fill(pygame.Color(244, 215, 65))
         pygame.display.update()
         self.game_display.blit(self.level_image, (LEVEL_POS_X, LEVEL_POS_Y))
-        font = pygame.font.SysFont("JOKERMAN", 25)
-        text = font.render('Level ' + str(self.level), True, (255, 255, 255))
-        self.game_display.blit(text, (LEVEL_POS_X + 100, LEVEL_POS_Y + 5))
+        self.put_text('Level ' + str(self.level), 'JOKERMAN', 25, LEVEL_POS_X + 100, LEVEL_POS_Y + 5)
         pygame.display.update()
         pygame.time.delay(3000)
 
@@ -94,7 +94,7 @@ class Wwa():
                                 cactus = (round(obj.x / 32), round(obj.y / 32))
                                 if cactus not in self.rect:
                                     self.cactus_count += 1
-                                    self.cactus_inc(self.cactus_count)
+                                    self.put_text(self.cactus_count, 'JOKERMAN', 25, CACTUS_COUNT_POS_X, SCORE_AND_CACTUS_POS_Y)
                                     self.rect.append(cactus)
                                     self.redraw_pics()
                                     self.pick_sound.play()
@@ -106,7 +106,7 @@ class Wwa():
                                            obj.height).colliderect(collision_rect) == True:
                                 self.step_back(self.block)
                                 self.life -= 1
-                                self.life_dec(self.life)
+                                self.put_text(self.life, 'JOKERMAN', 25, SCORE_COUNT_POS_X, SCORE_AND_CACTUS_POS_Y)
                                 self.hit_sound.play()
                                 if self.life <= 0:
                                     self.over_sound.play()
@@ -117,8 +117,8 @@ class Wwa():
             self.block.update(event)
             self.game_display.blit(self.pics, (self.block.pos_x, self.block.pos_y))
             self.game_display.blit(self.score_image, (SCORE_POS_X - 20, SCORE_POS_Y - 10))
-            self.life_dec(self.life)
-            self.cactus_inc(self.cactus_count)
+            self.put_text(self.life, 'JOKERMAN', 25, SCORE_COUNT_POS_X, SCORE_AND_CACTUS_POS_Y)
+            self.put_text(self.cactus_count, 'JOKERMAN', 25, CACTUS_COUNT_POS_X, SCORE_AND_CACTUS_POS_Y)
             self.block.draw(self.game_display)
             self.clock.tick(60)
             pygame.display.update()
