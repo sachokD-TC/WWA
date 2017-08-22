@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.0.2" orientation="orthogonal" renderorder="right-down" width="40" height="40" tilewidth="32" tileheight="32" nextobjectid="104">
+<map version="2017.05.26" orientation="orthogonal" renderorder="right-down" width="40" height="40" tilewidth="32" tileheight="32" nextobjectid="105">
  <tileset firstgid="1" source="desert.tsx"/>
+ <objectgroup name="exit">
+  <object id="104" x="1222" y="1060" width="21" height="19">
+   <ellipse/>
+  </object>
+ </objectgroup>
  <objectgroup name="pic_objs">
   <object id="30" x="293" y="226" width="23" height="23"/>
   <object id="31" x="322" y="228" width="27" height="20"/>
