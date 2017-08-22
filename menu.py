@@ -101,6 +101,8 @@ class GameMenu():
 if __name__ == "__main__":
     # Creating the screen
     screen = pygame.display.set_mode((800, 800), 0, 32)
+    icon = pygame.image.load('pic/haticon.png')
+    pygame.display.set_icon(icon)
 
     menu_items = ('Start', 'About', 'Quit')
 
