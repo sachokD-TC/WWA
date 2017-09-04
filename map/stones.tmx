@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="2017.05.26" orientation="orthogonal" renderorder="right-down" width="40" height="40" tilewidth="32" tileheight="32" nextobjectid="107">
+ <tileset firstgid="1" source="desert.tsx"/>
+ <objectgroup name="exit" visible="0">
+  <object id="105" x="1219" y="1060" width="25" height="23">
+   <ellipse/>
+  </object>
+ </objectgroup>
+ <objectgroup name="pic_objs" visible="0"/>
+ <objectgroup name="boxes" visible="0"/>
+ <layer name="Ground" width="40" height="40" opacity="0.72">
+  <data encoding="base64" compression="zlib">
+   eJzt0LENgDAQBMEXGSJDkBmX4P7L4wuggJOYYPPRXlV1hnZ3RzdD2/n4+Pj4IuPj4+Pjy4yPj4+PLzM+Pr7vVrgv/R/fP3yj20J7uhe5cK+b
+  </data>
+ </layer>
+</map>

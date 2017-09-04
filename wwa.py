@@ -1,5 +1,6 @@
 import pytmx
 import pygame
+from levels import levels_names
 from pytmx.util_pygame import load_pygame
 from players.cowboy import Cowboy
 
@@ -30,7 +31,7 @@ class Wwa():
         self.cactus_count = 0
         self.life = 100
         self.game_display = pygame.display.set_mode((WIN_WIDTH, WIN_HEIGHT))
-        self.pytmx_map = load_pygame("map//desert.tmx")
+        self.pytmx_map = load_pygame("map//" + levels_names[level-1] + ".tmx")
         self.score_image = pygame.image.load('pic/scores_brown.png')
         self.level_image = pygame.image.load('pic/level.png')
         self.pick_sound = pygame.mixer.Sound('sounds/pick.wav')
@@ -84,6 +85,8 @@ class Wwa():
         pygame.display.update()
         self.show_final_scores()
         pygame.time.delay(3000)
+        self.level += 1
+        Wwa(self.level)
 
 
 
