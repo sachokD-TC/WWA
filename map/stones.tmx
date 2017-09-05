@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="2017.05.26" orientation="orthogonal" renderorder="right-down" width="40" height="40" tilewidth="32" tileheight="32" nextobjectid="201">
+<map version="2017.05.26" orientation="orthogonal" renderorder="right-down" width="40" height="40" tilewidth="32" tileheight="32" nextobjectid="221">
  <tileset firstgid="1" source="desert.tsx"/>
+ <objectgroup name="teleport">
+  <object id="201" x="609" y="192" width="31" height="31"/>
+  <object id="202" x="160" y="416" width="30" height="30"/>
+ </objectgroup>
  <objectgroup name="exit">
   <object id="105" x="1219" y="1060" width="25" height="23">
    <ellipse/>
@@ -35,9 +39,9 @@
   <object id="157" x="32" y="143" width="49" height="46"/>
   <object id="158" x="70" y="174" width="43" height="47"/>
   <object id="160" x="110" y="207" width="35" height="81"/>
-  <object id="161" x="138" y="240" width="37" height="104"/>
-  <object id="162" x="170" y="336" width="136" height="48"/>
-  <object id="164" x="305" y="306" width="95" height="57"/>
+  <object id="161" x="138" y="240" width="37" height="130"/>
+  <object id="162" x="170" y="336" width="136" height="34"/>
+  <object id="164" x="305" y="306" width="95" height="63"/>
   <object id="165" x="404" y="243" width="64" height="72"/>
   <object id="166" x="146" y="80" width="224" height="33"/>
   <object id="167" x="176" y="113" width="195" height="31"/>
@@ -54,11 +58,25 @@
   <object id="189" x="522" y="237" width="39" height="93"/>
   <object id="188" x="493" y="206" width="37" height="77"/>
   <object id="187" x="468" y="209" width="29" height="74"/>
-  <object id="199" x="589" y="79" width="164" height="99"/>
+  <object id="199" x="599" y="46" width="164" height="99"/>
+  <object id="203" x="656" y="132" width="99" height="44"/>
+  <object id="205" x="368" y="358" width="38" height="43"/>
+  <object id="208" x="401" y="403" width="30" height="285"/>
+  <object id="209" x="271" y="690" width="130" height="38"/>
+  <object id="210" x="206" y="624" width="67" height="74"/>
+  <object id="211" x="145" y="591" width="63" height="49"/>
+  <object id="212" x="107" y="561" width="39" height="36"/>
+  <object id="213" x="79" y="496" width="34" height="78"/>
+  <object id="214" x="47" y="427" width="35" height="68"/>
+  <object id="215" x="71" y="360" width="42" height="76"/>
+  <object id="217" x="106" y="340" width="30" height="27"/>
+  <object id="218" x="259" y="422" width="25" height="19"/>
+  <object id="219" x="326" y="486" width="17" height="13"/>
+  <object id="220" x="304" y="560" width="33" height="65"/>
  </objectgroup>
- <layer name="Ground" width="40" height="40" opacity="0.62">
+ <layer name="Ground" width="40" height="40" opacity="0.32">
   <data encoding="base64" compression="zlib">
-   eJzt08sKwkAMheHBnbgTXXhrsa2Lauv7P54RJhCGuVSbYsCz+EExkq+B7pxzW6PtqQ1VUVeqMdZa+HrqTt0m/K/7YFbLx/WZvex6UHVhVtN3pE4TjK13hc+z1C3Z9/48RIxyb+fvViXiedlcs/TFjPK9af13vt8hcndZ7ea/c6Evd0e+HbvGzDPx3FjY/40vdqvYPVPzoX9JX7gztXco/K7tk/u0d2r4rAQffPDBB5/N4IMPPvjgsxl88P2qp3Gf9fvB9x++M7Uy2oV6AcCBxfc=
+   eJztlm8LgkAMh4/eSAQVUYT9sUwjNOv7f7wmOBjj7rzy9AbdiwfSJnv65aZbpdRGKDtgAWRADtyEMSd+FVADd4fryi9qffkhlaUvej2BS0+tT78DcHRwLDov/ntqgk9f9Gs/NxpH2q/scsssJMx3qCv10znSuSm6Y8wvZbkvgRWwJnVDZ4772XLE7NDrpanfk+tSUuPTT5eVLk9TPfcf04/3NPVter737Uf7+e45xA/3m4mx93GfH/6vidLvj7H3sc0P9xvfEw/VPx9T+NGZoHvCZX6n8NPtZso1sB/PUFp+tgxTcj6kHzry95mcZBvaT+fZ7hV8/krxM92T0vxCPutc/EIS/aJf9It+0U8m0e933sL9pOcX/f7D7wTMhHIGPi3vxNs=
   </data>
  </layer>
 </map>
