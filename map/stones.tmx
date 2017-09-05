@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="2017.05.26" orientation="orthogonal" renderorder="right-down" width="40" height="40" tilewidth="32" tileheight="32" nextobjectid="221">
+<map version="2017.05.26" orientation="orthogonal" renderorder="right-down" width="40" height="40" tilewidth="32" tileheight="32" nextobjectid="254">
  <tileset firstgid="1" source="desert.tsx"/>
  <objectgroup name="teleport">
   <object id="201" x="609" y="192" width="31" height="31"/>
@@ -32,6 +32,25 @@
   <object id="176" x="711" y="202" width="14" height="10">
    <ellipse/>
   </object>
+  <object id="224" x="550" y="616" width="19" height="15">
+   <ellipse/>
+  </object>
+  <object id="246" x="649" y="490" width="14" height="10"/>
+  <object id="247" x="646" y="424" width="22" height="14">
+   <ellipse/>
+  </object>
+  <object id="248" x="614" y="390" width="20" height="17">
+   <ellipse/>
+  </object>
+  <object id="249" x="488" y="423" width="16" height="17">
+   <ellipse/>
+  </object>
+  <object id="250" x="454" y="391" width="20" height="17">
+   <ellipse/>
+  </object>
+  <object id="253" x="616" y="615" width="15" height="15">
+   <ellipse/>
+  </object>
  </objectgroup>
  <objectgroup name="boxes">
   <object id="150" x="82" y="35" width="66" height="45"/>
@@ -61,7 +80,7 @@
   <object id="199" x="599" y="46" width="164" height="99"/>
   <object id="203" x="656" y="132" width="99" height="44"/>
   <object id="205" x="368" y="358" width="38" height="43"/>
-  <object id="208" x="401" y="403" width="30" height="285"/>
+  <object id="208" x="401" y="371" width="32" height="317"/>
   <object id="209" x="271" y="690" width="130" height="38"/>
   <object id="210" x="206" y="624" width="67" height="74"/>
   <object id="211" x="145" y="591" width="63" height="49"/>
@@ -73,10 +92,25 @@
   <object id="218" x="259" y="422" width="25" height="19"/>
   <object id="219" x="326" y="486" width="17" height="13"/>
   <object id="220" x="304" y="560" width="33" height="65"/>
+  <object id="223" x="623" y="557" width="34" height="39"/>
+  <object id="226" x="423" y="341" width="109" height="28"/>
+  <object id="228" x="524" y="334" width="39" height="66"/>
+  <object id="231" x="561" y="335" width="126" height="34"/>
+  <object id="232" x="689" y="355" width="50" height="42"/>
+  <object id="233" x="721" y="398" width="50" height="62"/>
+  <object id="235" x="750" y="443" width="57" height="87"/>
+  <object id="236" x="721" y="528" width="105" height="66"/>
+  <object id="237" x="692" y="594" width="131" height="64"/>
+  <object id="238" x="593" y="659" width="100" height="26"/>
+  <object id="239" x="425" y="684" width="167" height="36"/>
+  <object id="240" x="428" y="432" width="38" height="193"/>
+  <object id="242" x="456" y="466" width="41" height="95"/>
+  <object id="244" x="518" y="586" width="19" height="13"/>
+  <object id="245" x="585" y="454" width="13" height="12"/>
  </objectgroup>
- <layer name="Ground" width="40" height="40" opacity="0.32">
+ <layer name="Ground" width="40" height="40" opacity="0.73">
   <data encoding="base64" compression="zlib">
-   eJztlm8LgkAMh4/eSAQVUYT9sUwjNOv7f7wmOBjj7rzy9AbdiwfSJnv65aZbpdRGKDtgAWRADtyEMSd+FVADd4fryi9qffkhlaUvej2BS0+tT78DcHRwLDov/ntqgk9f9Gs/NxpH2q/scsssJMx3qCv10znSuSm6Y8wvZbkvgRWwJnVDZ4772XLE7NDrpanfk+tSUuPTT5eVLk9TPfcf04/3NPVter737Uf7+e45xA/3m4mx93GfH/6vidLvj7H3sc0P9xvfEw/VPx9T+NGZoHvCZX6n8NPtZso1sB/PUFp+tgxTcj6kHzry95mcZBvaT+fZ7hV8/krxM92T0vxCPutc/EIS/aJf9It+0U8m0e933sL9pOcX/f7D7wTMhHIGPi3vxNs=
+   eJztlltrwzAMhc1eyihsZbSE7tI0S8PoZf3/P28a5IB6KrvZojDD/HBo4sro66kleRlCeMpUK9FctBE1ovfMdK/49qKDqBuwb/eDWC8+aJ/IC66jqL4R68n3LHoZwNj2XPx7DkqevOD7fj4ZjDrfrvdtk9CMeMeyaj6LUddN27/DvzX5/iB6FC1U3NiaY76Uj/AOXJ9GfKX2rVWMJ5/lleVnLJ75p+TjnLG8pxvfe/PpfN45x/Chv8XUGXGdsc+rxzAf/tdZuDxzOIfoiy2tHSNxnnzob9wnPsJ1faBmrfqpQ7yOxvDpmqiMvFy/3Ie2FOfhYWx+aF/wjPzaF+s86L3e/Zn7Sso/xPN5mLI/W/MNubAOPj2Pq0ScJx8Y+T7TKG95Huv6QS17eBfjszh1D2nC9V2mpk+vu3iKL3YmG1rTZ8B73gzhs2Ydr001A4fw/aUKX+ErfIWv8OWpwvd7nTPny92/wvc/+F5Fd5nqTfQFNCPEQQ==
   </data>
  </layer>
 </map>
