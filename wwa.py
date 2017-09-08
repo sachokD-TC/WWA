@@ -4,6 +4,7 @@ from levels import levels_names
 from pytmx.util_pygame import load_pygame
 from players.cowboy import Cowboy
 
+TELEPORT = 'teleport'
 
 WIN_WIDTH = 800
 WIN_HEIGHT = 800
@@ -18,7 +19,6 @@ SCORE_COUNT_POS_X = SCORE_POS_X + 220
 SCORE_AND_CACTUS_POS_Y = SCORE_POS_Y + 5
 CACTUS_COUNT_POS_X = SCORE_POS_X + 80
 
-
 red = pygame.Color(153, 0, 0)
 
 
@@ -30,8 +30,10 @@ class Wwa():
         self.clock = pygame.time.Clock()
         self.cactus_count = 0
         self.life = 100
+        self.teleports = []
+        self.tnumber = 0
         self.game_display = pygame.display.set_mode((WIN_WIDTH, WIN_HEIGHT))
-        self.pytmx_map = load_pygame("map//" + levels_names[level-1] + ".tmx")
+        self.pytmx_map = load_pygame("map//" + levels_names[level - 1] + ".tmx")
         self.score_image = pygame.image.load('pic/scores_brown.png')
         self.level_image = pygame.image.load('pic/level.png')
         self.pick_sound = pygame.mixer.Sound('sounds/pick.wav')
@@ -46,14 +48,22 @@ class Wwa():
         self.game_display.blit(text, (x, y))
 
     def step_back(self, block):
-        block.rect.x -= block.movement_dict[block.movement][0]
-        block.rect.y -= block.movement_dict[block.movement][1]
-        block.pos_x += block.movement_dict[block.movement][0]
-        block.pos_y += block.movement_dict[block.movement][1]
+        self.step(block, -1)
+
+    def step_forward(self, block):
+        self.step(block, 1)
+
+    def step(self, block, sign):
+        block.rect.x += block.movement_dict[block.movement][0]*sign
+        block.rect.y += block.movement_dict[block.movement][1]*sign
+        block.pos_x += block.movement_dict[block.movement][0]*(-sign)
+        block.pos_y += block.movement_dict[block.movement][1]*(-sign)
 
 
     def redraw_pics(self):
         for layer in self.pytmx_map.visible_layers:
+            if TELEPORT in  layer.name:
+                self.teleports.append(layer)
             if isinstance(layer, pytmx.TiledTileLayer):
                 for x in range(0, 40):
                     for y in range(0, 40):
@@ -68,13 +78,13 @@ class Wwa():
         self.game_display.fill(pygame.Color(244, 215, 65))
         pygame.display.update()
         self.game_display.blit(self.level_image, (LEVEL_POS_X, LEVEL_POS_Y))
-        self.put_text('Level ' + str(self.level), 'JOKERMAN', 25, LEVEL_POS_X + 100, LEVEL_POS_Y + 5, (255,255,255))
+        self.put_text('Level ' + str(self.level), 'JOKERMAN', 25, LEVEL_POS_X + 100, LEVEL_POS_Y + 5, (255, 255, 255))
         pygame.display.update()
         pygame.time.delay(3000)
 
     def show_final_scores(self):
         for i in range(0, self.cactus_count):
-            self.put_text('Cactuses '  + str(i), 'JOKERMAN', 25, 190 + 100, 100 + 200,(0,0,0))
+            self.put_text('Cactuses ' + str(i), 'JOKERMAN', 25, 190 + 100, 100 + 200, (0, 0, 0))
             pygame.display.update()
             pygame.time.delay(50)
             self.put_text('Cactuses ' + str(i), 'JOKERMAN', 25, 190 + 100, 100 + 200, (255, 255, 255))
@@ -87,8 +97,6 @@ class Wwa():
         pygame.time.delay(3000)
         self.level += 1
         Wwa(self.level)
-
-
 
     def main_loop(self):
         self.block = Cowboy(pygame.Color(153, 0, 0), 32, 32)
@@ -106,6 +114,20 @@ class Wwa():
             for layer in self.pytmx_map.visible_layers:
                 layer_index += 1
                 if isinstance(layer, pytmx.TiledObjectGroup):
+                    if TELEPORT in layer.name:
+                        collision_rect = pygame.Rect(self.block.rect.x, self.block.rect.y, 32, 32)
+                        for obj in layer:
+                            if pygame.Rect(obj.x + self.block.pos_x, obj.y + self.block.pos_y, obj.width,
+                                           obj.height).colliderect(collision_rect) == True:
+                                if self.tnumber == 1:
+                                    self.tnumber = 0
+                                else:
+                                    self.tnumber = 1
+                                tel_layer_nuumber = int(layer.name[-1])
+                                print('tnumber = ' + str(tel_layer_nuumber))
+                                self.block.rect.x = self.teleports[tel_layer_nuumber][self.tnumber].x + self.block.pos_x
+                                self.block.rect.y = self.teleports[tel_layer_nuumber][self.tnumber].y + self.block.pos_y
+                                self.step_forward(self.block)
                     if layer.name == 'exit':
                         for obj in layer:
                             collision_rect = pygame.Rect(self.block.rect.x, self.block.rect.y, 32, 32)
@@ -120,7 +142,8 @@ class Wwa():
                                 cactus = (round(obj.x / 32), round(obj.y / 32))
                                 if cactus not in self.rect:
                                     self.cactus_count += 1
-                                    self.put_text(self.cactus_count, 'JOKERMAN', 25, CACTUS_COUNT_POS_X, SCORE_AND_CACTUS_POS_Y, (255,255,255))
+                                    self.put_text(self.cactus_count, 'JOKERMAN', 25, CACTUS_COUNT_POS_X,
+                                                  SCORE_AND_CACTUS_POS_Y, (255, 255, 255))
                                     self.rect.append(cactus)
                                     self.redraw_pics()
                                     self.pick_sound.play()
@@ -132,7 +155,8 @@ class Wwa():
                                            obj.height).colliderect(collision_rect) == True:
                                 self.step_back(self.block)
                                 self.life -= 1
-                                self.put_text(self.life, 'JOKERMAN', 25, SCORE_COUNT_POS_X, SCORE_AND_CACTUS_POS_Y, (255,255,255))
+                                self.put_text(self.life, 'JOKERMAN', 25, SCORE_COUNT_POS_X, SCORE_AND_CACTUS_POS_Y,
+                                              (255, 255, 255))
                                 self.hit_sound.play()
                                 if self.life <= 0:
                                     self.over_sound.play()
@@ -140,12 +164,12 @@ class Wwa():
                                     self.loop = False
                                 break
 
-
             self.block.update(event)
             self.game_display.blit(self.pics, (self.block.pos_x, self.block.pos_y))
             self.game_display.blit(self.score_image, (SCORE_POS_X - 20, SCORE_POS_Y - 10))
-            self.put_text(self.life, 'JOKERMAN', 25, SCORE_COUNT_POS_X, SCORE_AND_CACTUS_POS_Y, (255,255,255))
-            self.put_text(self.cactus_count, 'JOKERMAN', 25, CACTUS_COUNT_POS_X, SCORE_AND_CACTUS_POS_Y,(255,255,255))
+            self.put_text(self.life, 'JOKERMAN', 25, SCORE_COUNT_POS_X, SCORE_AND_CACTUS_POS_Y, (255, 255, 255))
+            self.put_text(self.cactus_count, 'JOKERMAN', 25, CACTUS_COUNT_POS_X, SCORE_AND_CACTUS_POS_Y,
+                          (255, 255, 255))
             self.block.draw(self.game_display)
             self.clock.tick(60)
             pygame.display.update()
