@@ -5,7 +5,6 @@ from wwa import Wwa
 
 pygame.init()
 
-
 class GameMenu():
     def __init__(self, screen, items, bg_color=(0, 0, 0), font=None, font_size=70,
                  font_color=(15, 12, 0)):
@@ -70,7 +69,7 @@ class GameMenu():
                     if click[0] and name == 'Quit':
                         mainloop = False
                     if click[0] and name == 'Start':
-                        Wwa(2)
+                        Wwa(1)
                     if click[0] and name == 'About':
                         print('About - is clicked')
 
