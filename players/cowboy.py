@@ -1,6 +1,7 @@
 import pygame
 import players.constants as const
 
+
 class Cowboy(pygame.sprite.Sprite):
     def __init__(self, color, width, height):
         pygame.sprite.Sprite.__init__(self)
@@ -45,7 +46,7 @@ class Cowboy(pygame.sprite.Sprite):
                 self.movement = const.REST
         if self.rect.x < 15:
             self.rect.x = 15
-            self.pos_x =15
+            self.pos_x = 15
         elif self.rect.y < 15:
             self.rect.y = 15
             self.pos_y = 15
@@ -60,11 +61,10 @@ class Cowboy(pygame.sprite.Sprite):
             self.rect.y += self.movement_dict[self.movement][1]
             self.pos_x -= self.movement_dict[self.movement][0]
             self.pos_y -= self.movement_dict[self.movement][1]
-            self.image =  pygame.image.load('actors/' + self.actions[self.movement])
+            self.image = pygame.image.load('actors/' + self.actions[self.movement])
 
     def draw(self, display):
         display.blit(self.image, self.rect)
-
 
     def step_back(self):
         self.rect.x -= self.movement_dict[self.movement][0]

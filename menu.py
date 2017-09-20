@@ -56,11 +56,9 @@ class GameMenu():
         xmove = 0
         inc = -1
         while mainloop:
-            # Limit frame speed to 50 FPS
             self.clock.tick(50)
             posm =pygame.mouse.get_pos()
             click = pygame.mouse.get_pressed()
-            is_highlight = False
             new = None
             for name, label, (width, height), (posx, posy) in self.items:
                 if posm[0] > posx and posm[0] < posx + width and posm[1] > posy and posm[1] < posy + height:
@@ -69,7 +67,7 @@ class GameMenu():
                     if click[0] and name == 'Quit':
                         mainloop = False
                     if click[0] and name == 'Start':
-                        Wwa(2, True)
+                        Wwa(2, False, False)
                     if click[0] and name == 'About':
                         print('About - is clicked')
 
