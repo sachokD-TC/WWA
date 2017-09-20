@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="2017.05.26" orientation="orthogonal" renderorder="right-down" width="40" height="40" tilewidth="32" tileheight="32" nextobjectid="514">
  <tileset firstgid="1" source="desert.tsx"/>
- <objectgroup name="boxes" visible="0">
+ <objectgroup name="boxes">
   <object id="292" x="172" y="35" width="263" height="78"/>
   <object id="293" x="412" y="31" width="87" height="49"/>
   <object id="294" x="497" y="30" width="163" height="17"/>
@@ -209,7 +209,7 @@
   <object id="510" x="1131" y="201" width="8" height="9"/>
   <object id="511" x="780" y="843" width="9" height="9"/>
  </objectgroup>
- <objectgroup name="exit" visible="0">
+ <objectgroup name="exit">
   <object id="513" x="1132" y="1102"/>
  </objectgroup>
  <layer name="Ground" width="40" height="40" opacity="0.4">

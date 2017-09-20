@@ -1,4 +1,5 @@
 import pygame
+import players.constants as const
 
 class Cowboy(pygame.sprite.Sprite):
     def __init__(self, color, width, height):
@@ -8,11 +9,11 @@ class Cowboy(pygame.sprite.Sprite):
         w = int(48)
         h = int(65)
         self.surface = pygame.Surface([w, h])
-        self.actions = {"left": "left.png",
-                        "right": "right.png",
-                        "down": "front.png",
-                        "up": "back.png",
-                        "rest": "front.png"}
+        self.actions = {const.LEFT: "left.png",
+                        const.RIGHT: "right.png",
+                        const.DOWN: "front.png",
+                        const.UP: "back.png",
+                        const.REST: "front.png"}
         self.action = "left"
         self.index = 200
         self.ind = 300
@@ -33,17 +34,15 @@ class Cowboy(pygame.sprite.Sprite):
                     pygame.quit()
                     quit()
                 elif event.key == pygame.K_LEFT:
-                    self.movement = 'left'
-                    self.ind -= 1
+                    self.movement = const.LEFT
                 elif event.key == pygame.K_RIGHT:
-                    self.movement = 'right'
-                    self.ind += 1
+                    self.movement = const.RIGHT
                 elif event.key == pygame.K_DOWN:
-                    self.movement = 'down'
+                    self.movement = const.DOWN
                 elif event.key == pygame.K_UP:
-                    self.movement = 'up'
+                    self.movement = const.UP
             elif event.type == pygame.KEYUP:
-                self.movement = 'rest'
+                self.movement = const.REST
         if self.rect.x < 15:
             self.rect.x = 15
             self.pos_x =15
@@ -65,3 +64,10 @@ class Cowboy(pygame.sprite.Sprite):
 
     def draw(self, display):
         display.blit(self.image, self.rect)
+
+
+    def step_back(self):
+        self.rect.x -= self.movement_dict[self.movement][0]
+        self.rect.y -= self.movement_dict[self.movement][1]
+        self.pos_x += self.movement_dict[self.movement][0]
+        self.pos_y += self.movement_dict[self.movement][1]

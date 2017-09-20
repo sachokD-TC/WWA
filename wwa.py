@@ -1,9 +1,11 @@
 import pytmx
 import pygame
-import random
 from levels import levels_names_times
 from pytmx.util_pygame import load_pygame
 from players.cowboy import Cowboy
+from players.sun import Sun
+from sound_play import Sound_play as sound
+
 
 TIME_TAKEN_Y = 400
 
@@ -46,7 +48,7 @@ red = pygame.Color(153, 0, 0)
 
 
 class Wwa():
-    def __init__(self, level):
+    def __init__(self, level, sound_on):
         pygame.init()
         self.time = levels_names_times[level-1][TIME_INDEX]
         self.rect = []
@@ -60,22 +62,14 @@ class Wwa():
         self.pytmx_map = load_pygame("map//" + levels_names_times[level - 1][LEVEL_INDEX] + ".tmx")
         self.score_image = pygame.image.load('pic/scores_brown.png')
         self.level_image = pygame.image.load('pic/level.png')
-        self.pick_sound = pygame.mixer.Sound('sounds/pick.wav')
-        self.hit_sound = pygame.mixer.Sound('sounds/hit.wav')
-        self.over_sound = pygame.mixer.Sound('sounds/over.wav')
         self.finish_background = pygame.image.load('pic/level_completed.png')
+        self.sound = sound(sound_on)
         self.main_loop()
 
     def put_text(self, t, font_name, font_size, x, y, color):
         font = pygame.font.SysFont(font_name, font_size)
         text = font.render(str(t), True, color)
         self.game_display.blit(text, (x, y))
-
-    def step_back(self, block):
-        block.rect.x -= block.movement_dict[block.movement][0]
-        block.rect.y -= block.movement_dict[block.movement][1]
-        block.pos_x += block.movement_dict[block.movement][0]
-        block.pos_y += block.movement_dict[block.movement][1]
 
     def redraw_pics(self):
         for layer in self.pytmx_map.visible_layers:
@@ -122,8 +116,19 @@ class Wwa():
         else:
             Wwa(self.level)
 
+    def minus_life(self):
+        self.life -= 1
+        self.put_text(self.life, FONT_NAME, 25, SCORE_COUNT_POS_X, SCORE_AND_CACTUS_POS_Y,
+                      (255, 255, 255))
+        self.sound.play_hit_sound()
+        if self.life <= 0:
+            self.sound.play_game_over_sound()
+            pygame.time.delay(3000)
+            self.loop = False
+
     def main_loop(self):
-        self.block = Cowboy(pygame.Color(153, 0, 0), 32, 32)
+        self.sun = Sun(250, 250, pygame.Rect(250, 350, 20, 120))
+        self.cowboy = Cowboy(pygame.Color(153, 0, 0), 32, 32)
         self.background = pygame.Surface((42 * 32, 42 * 32))
         self.pics = pygame.Surface((42 * 32, 42 * 32))
         self.loop = True
@@ -139,25 +144,16 @@ class Wwa():
             for layer in self.pytmx_map.visible_layers:
                 layer_index += 1
                 if isinstance(layer, pytmx.TiledObjectGroup):
-                    if layer.name == TELEPORT_LEVEL:
-                        for obj in layer:
-                            collision_rect = pygame.Rect(self.block.rect.x, self.block.rect.y, 32, 32)
-                            if pygame.Rect(obj.x + self.block.pos_x, obj.y + self.block.pos_y, obj.width,
-                                           obj.height).colliderect(collision_rect) == True:
-                                tnumber = random.randrange(0,len(self.teleports))
-                                self.block.rect.x = self.teleports[tnumber].x
-                                self.block.rect.y = self.teleports[tnumber].y
-                                break
                     if layer.name == EXIT:
                         for obj in layer:
-                            collision_rect = pygame.Rect(self.block.rect.x, self.block.rect.y, 32, 32)
-                            if pygame.Rect(obj.x + self.block.pos_x, obj.y + self.block.pos_y, obj.width,
+                            collision_rect = pygame.Rect(self.cowboy.rect.x, self.cowboy.rect.y, 32, 32)
+                            if pygame.Rect(obj.x + self.cowboy.pos_x, obj.y + self.cowboy.pos_y, obj.width,
                                            obj.height).colliderect(collision_rect) == True:
                                 self.show_finish()
                     if layer.name == PIC_OBJS:
                         for obj in layer:
-                            collision_rect = pygame.Rect(self.block.rect.x, self.block.rect.y, 32, 32)
-                            if pygame.Rect(obj.x + self.block.pos_x, obj.y + self.block.pos_y, obj.width,
+                            collision_rect = pygame.Rect(self.cowboy.rect.x, self.cowboy.rect.y, 32, 32)
+                            if pygame.Rect(obj.x + self.cowboy.pos_x, obj.y + self.cowboy.pos_y, obj.width,
                                            obj.height).colliderect(collision_rect) == True:
                                 cactus = (round(obj.x / 32), round(obj.y / 32))
                                 if cactus not in self.rect:
@@ -166,32 +162,30 @@ class Wwa():
                                                   SCORE_AND_CACTUS_POS_Y, (255, 255, 255))
                                     self.rect.append(cactus)
                                     self.redraw_pics()
-                                    self.pick_sound.play()
+                                    self.sound.play_pick_sound()
                                     break
                     if layer.name == BOXES:
                         for obj in layer:
-                            collision_rect = pygame.Rect(self.block.rect.x, self.block.rect.y, 32, 32)
-                            if pygame.Rect(obj.x + self.block.pos_x, obj.y + self.block.pos_y, obj.width,
+                            collision_rect = pygame.Rect(self.cowboy.rect.x, self.cowboy.rect.y, 32, 32)
+                            if pygame.Rect(obj.x + self.cowboy.pos_x, obj.y + self.cowboy.pos_y, obj.width,
                                            obj.height).colliderect(collision_rect) == True:
-                                self.step_back(self.block)
-                                self.life -= 1
-                                self.put_text(self.life, FONT_NAME, 25, SCORE_COUNT_POS_X, SCORE_AND_CACTUS_POS_Y,
-                                              (255, 255, 255))
-                                self.hit_sound.play()
-                                if self.life <= 0:
-                                    self.over_sound.play()
-                                    pygame.time.delay(3000)
-                                    self.loop = False
+                                self.cowboy.step_back()
+                                self.minus_life()
                                 break
 
-            self.block.update(event)
-            self.game_display.blit(self.pics, (self.block.pos_x, self.block.pos_y))
+            if self.cowboy.rect.colliderect(self.sun.rect):
+                self.minus_life()
+
+            self.cowboy.update(event)
+            self.sun.update(-self.cowboy.movement_dict[self.cowboy.movement][0], -self.cowboy.movement_dict[self.cowboy.movement][1])
+            self.game_display.blit(self.pics, (self.cowboy.pos_x, self.cowboy.pos_y))
             self.game_display.blit(self.score_image, (SCORE_POS_X - 20, SCORE_POS_Y - 10))
             self.put_text(self.life, FONT_NAME, 25, SCORE_COUNT_POS_X, SCORE_AND_CACTUS_POS_Y, (255, 255, 255))
             self.put_text(self.cactus_count, FONT_NAME, 25, CACTUS_COUNT_POS_X, SCORE_AND_CACTUS_POS_Y,
                           (255, 255, 255))
             self.put_text(self.time, FONT_NAME, 25, TIME_POS_X, TIME_POS_Y,
                           (255, 255, 255))
-            self.block.draw(self.game_display)
+            self.sun.draw(self.game_display)
+            self.cowboy.draw(self.game_display)
             self.clock.tick(60)
             pygame.display.update()

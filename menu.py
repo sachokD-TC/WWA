@@ -69,7 +69,7 @@ class GameMenu():
                     if click[0] and name == 'Quit':
                         mainloop = False
                     if click[0] and name == 'Start':
-                        Wwa(1)
+                        Wwa(2, True)
                     if click[0] and name == 'About':
                         print('About - is clicked')
 
