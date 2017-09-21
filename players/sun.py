@@ -3,7 +3,7 @@ import players.constants as const
 
 
 class Sun(pygame.sprite.Sprite):
-    def __init__(self, startx, starty, box):
+    def __init__(self, box):
         pygame.sprite.Sprite.__init__(self)
         self.image = pygame.image.load('actors/sun.png')
         self.rect = self.image.get_rect()
@@ -13,8 +13,8 @@ class Sun(pygame.sprite.Sprite):
         self.surface = pygame.Surface([32, 32])
         self.pos_x = self.rect.x
         self.pos_y = self.rect.y
-        self.movement_dict = {const.UP: (0, -2),const.DOWN: (0, 2)}
-        self.movements_order = [const.UP, const.DOWN]
+        self.movement_dict = {const.LEFT: (-2, 0), const.RIGHT: (2, 0),const.UP: (0, -2),const.DOWN: (0, 2)}
+        self.movements_order = [const.UP, const.RIGHT, const.DOWN, const.LEFT]
         self.movement = const.DOWN
 
     def update(self, delta_x, delta_y):

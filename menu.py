@@ -30,7 +30,6 @@ class GameMenu():
             height = label.get_rect().height
 
             posx = (self.scr_width / 2) - (width / 2)
-            # t_h: total height of text block
             t_h = len(items) * height
             posy = (self.scr_height / 2 ) - (t_h / 2) + (index * height)
 
@@ -67,7 +66,7 @@ class GameMenu():
                     if click[0] and name == 'Quit':
                         mainloop = False
                     if click[0] and name == 'Start':
-                        Wwa(2, False, False)
+                        Wwa(1, False, True)
                     if click[0] and name == 'About':
                         print('About - is clicked')
 

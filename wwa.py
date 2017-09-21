@@ -1,6 +1,7 @@
 import pytmx
 import pygame
-from levels import levels_names_times
+import copy
+from levels import levels
 from pytmx.util_pygame import load_pygame
 from players.cowboy import Cowboy
 from players.sun import Sun
@@ -49,7 +50,7 @@ red = pygame.Color(153, 0, 0)
 class Wwa():
     def __init__(self, level, sound_on, godmode):
         pygame.init()
-        self.time = levels_names_times[level - 1][TIME_INDEX]
+        self.time = levels[level - 1][TIME_INDEX]
         self.rect = []
         self.suns = []
         self.level = level
@@ -62,7 +63,7 @@ class Wwa():
             self.life = 10000
         self.game_display = pygame.display.set_mode((WIN_WIDTH, WIN_HEIGHT))
         self.teleports = None
-        self.pytmx_map = load_pygame("map//" + levels_names_times[level - 1][LEVEL_INDEX] + ".tmx")
+        self.pytmx_map = load_pygame("map//" + levels[level - 1][LEVEL_INDEX] + ".tmx")
         self.score_image = pygame.image.load('pic/scores_brown.png')
         self.clock_image = pygame.image.load('pic/clock.png')
         self.level_image = pygame.image.load('pic/level.png')
@@ -102,7 +103,7 @@ class Wwa():
 
     def show_final_scores(self):
         self.put_text('Cactuses ' + str(self.cactus_count), 'JOKERMAN', 25, FINAL_SCORES_X, CACTUS_FINAL_Y, (0, 0, 0))
-        time_taken = levels_names_times[self.level - 1][TIME_INDEX] - self.time
+        time_taken = levels[self.level - 1][TIME_INDEX] - self.time
         self.put_text('Time ' + str(time_taken), 'JOKERMAN', 25, FINAL_SCORES_X, TIME_TAKEN_Y, (0, 0, 0))
         percent_done = (float)(self.cactus_count) / int(len(self.pic_obj_level)) * 100
         self.put_text('Layer done on ' + str(format(percent_done, '.2f')) + "%", 'JOKERMAN', 25, FINAL_SCORES_X,
@@ -116,7 +117,7 @@ class Wwa():
         self.show_final_scores()
         pygame.time.delay(3000)
         self.level += 1
-        if self.level > len(levels_names_times):
+        if self.level > len(levels):
             self.loop = False
         else:
             Wwa(self.level, self.sound_on, self.godmode)
@@ -133,7 +134,7 @@ class Wwa():
 
     def update_sun(self):
         for s in self.suns:
-            if not self.is_step_back:
+            if not self.cowboy.is_step_back:
                 s.update(-self.cowboy.movement_dict[self.cowboy.movement][0],
                          -self.cowboy.movement_dict[self.cowboy.movement][1])
             else:
@@ -146,22 +147,19 @@ class Wwa():
                 self.minus_life()
 
     def main_loop(self):
-        self.suns.append(Sun(250, 250, pygame.Rect(250, 350, 20, 120)))
-        self.suns.append(Sun(250, 250, pygame.Rect(1100, 760, 20, 80)))
-        self.suns.append(Sun(250, 250, pygame.Rect(750, 480, 20, 150)))
-        self.suns.append(Sun(250, 250, pygame.Rect(380, 880, 20, 150)))
-        self.cowboy = Cowboy(pygame.Color(153, 0, 0), 32, 32)
+        for s in levels[self.level-1][2]:
+            self.suns.append(Sun(copy.copy(s)))
+        self.cowboy = Cowboy(pygame.Rect(15,15, 595, 595))
         self.background = pygame.Surface((42 * 32, 42 * 32))
         self.pics = pygame.Surface((42 * 32, 42 * 32))
         self.loop = True
         self.event = None
-        self.is_step_back = False
         self.redraw_pics()
         self.show_level()
 
         while (self.loop):
             self.time -= 1;
-            self.is_step_back = False
+            self.cowboy.is_step_back = False
             for event in pygame.event.get():
                 pass
             layer_index = 0
@@ -194,13 +192,21 @@ class Wwa():
                             if pygame.Rect(obj.x + self.cowboy.pos_x, obj.y + self.cowboy.pos_y, obj.width,
                                            obj.height).colliderect(collision_rect) == True:
                                 self.cowboy.step_back()
-                                self.is_step_back = True
+                                self.cowboy.is_step_back = True
                                 self.minus_life()
                                 break
             self.check_sun_collide()
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_F3:
-                    self.sound = sound(not self.sound_on)
+                    self.sound_on = not self.sound_on
+                    self.sound = sound(self.sound_on)
+                elif event.key == pygame.K_F4:
+                    self.godmode = not self.godmode
+                    if self.godmode:
+                        self.life = 10000
+                    else:
+                        self.life = 100
+
             self.cowboy.update(event)
             self.game_display.blit(self.pics, (self.cowboy.pos_x, self.cowboy.pos_y))
             self.game_display.blit(self.score_image, (SCORE_POS_X - 20, SCORE_POS_Y - 10))

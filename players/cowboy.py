@@ -3,10 +3,12 @@ import players.constants as const
 
 
 class Cowboy(pygame.sprite.Sprite):
-    def __init__(self, color, width, height):
+    def __init__(self, box):
         pygame.sprite.Sprite.__init__(self)
+        self.box = box
         self.image = pygame.image.load('actors/right.png')
         self.rect = self.image.get_rect()
+        self.is_step_back = False
         w = int(48)
         h = int(65)
         self.surface = pygame.Surface([w, h])
@@ -18,11 +20,11 @@ class Cowboy(pygame.sprite.Sprite):
         self.action = "left"
         self.index = 200
         self.ind = 300
-        self.rect.x = 10
-        self.rect.y = 10
-        self.pos_x = self.rect.x
-        self.pos_y = self.rect.y
-        self.movement_dict = {'left': (-2, 0), 'right': (2, 0), 'down': (0, 2), 'up': (0, -2), 'rest': (0, 0)}
+        self.rect.x = 50
+        self.rect.y = 50
+        self.pos_x = self.rect.x - 30
+        self.pos_y = self.rect.y - 30
+        self.movement_dict = {const.LEFT: (-2, 0), const.RIGHT: (2, 0), const.DOWN: (0, 2), const.UP: (0, -2), const.REST: (0, 0)}
         self.movement = 'rest'
 
     def update(self, event):
@@ -47,15 +49,19 @@ class Cowboy(pygame.sprite.Sprite):
         if self.rect.x < 15:
             self.rect.x = 15
             self.pos_x = 15
+            self.is_step_back = True
         elif self.rect.y < 15:
             self.rect.y = 15
             self.pos_y = 15
+            self.is_step_back = True
         if self.rect.y > 610:
             self.rect.y = 610
             self.pos_y = -610
+            self.is_step_back = True
         if self.rect.x > 610:
             self.rect.x = 610
             self.pos_x = -610
+            self.is_step_back = True
         else:
             self.rect.x += self.movement_dict[self.movement][0]
             self.rect.y += self.movement_dict[self.movement][1]
