@@ -121,6 +121,7 @@ class Wwa():
             self.loop = False
         else:
             Wwa(self.level, self.sound_on, self.godmode)
+            self.loop = False
 
     def minus_life(self):
         self.life -= 1
