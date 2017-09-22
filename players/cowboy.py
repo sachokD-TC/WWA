@@ -22,8 +22,8 @@ class Cowboy(pygame.sprite.Sprite):
         self.ind = 300
         self.rect.x = 50
         self.rect.y = 50
-        self.pos_x = self.rect.x - 30
-        self.pos_y = self.rect.y - 30
+        self.pos_x = self.rect.x - 40
+        self.pos_y = self.rect.y - 40
         self.movement_dict = {const.LEFT: (-2, 0), const.RIGHT: (2, 0), const.DOWN: (0, 2), const.UP: (0, -2), const.REST: (0, 0)}
         self.movement = 'rest'
 
@@ -46,23 +46,6 @@ class Cowboy(pygame.sprite.Sprite):
                     self.movement = const.UP
             elif event.type == pygame.KEYUP:
                 self.movement = const.REST
-        if self.rect.x < 15:
-            self.rect.x = 15
-            self.pos_x = 15
-            self.is_step_back = True
-        elif self.rect.y < 15:
-            self.rect.y = 15
-            self.pos_y = 15
-            self.is_step_back = True
-        if self.rect.y > 615:
-            self.rect.y = 615
-            self.pos_y = -615
-            self.is_step_back = True
-        if self.rect.x > 615:
-            self.rect.x = 615
-            self.pos_x = -615
-            self.is_step_back = True
-        else:
             self.rect.x += self.movement_dict[self.movement][0]
             self.rect.y += self.movement_dict[self.movement][1]
             self.pos_x -= self.movement_dict[self.movement][0]

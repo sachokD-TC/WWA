@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="2017.05.26" orientation="orthogonal" renderorder="right-down" width="40" height="40" tilewidth="32" tileheight="32" nextobjectid="105">
+<map version="2017.05.26" orientation="orthogonal" renderorder="right-down" width="40" height="40" tilewidth="32" tileheight="32" nextobjectid="113">
  <tileset firstgid="1" source="desert.tsx"/>
  <objectgroup name="exit">
   <object id="104" x="1222" y="1060" width="21" height="19">
@@ -117,9 +117,6 @@
   <object id="23" x="104" y="359" width="16" height="20">
    <ellipse/>
   </object>
-  <object id="24" x="3" y="392" width="22" height="17">
-   <ellipse/>
-  </object>
   <object id="25" x="32" y="421" width="30" height="23">
    <ellipse/>
   </object>
@@ -130,9 +127,6 @@
    <ellipse/>
   </object>
   <object id="28" x="131" y="612" width="24" height="23">
-   <ellipse/>
-  </object>
-  <object id="29" x="4" y="644" width="24" height="21">
    <ellipse/>
   </object>
   <object id="68" x="848" y="657" width="289" height="291"/>
@@ -166,8 +160,12 @@
   <object id="98" x="774" y="843" width="20" height="14">
    <ellipse/>
   </object>
+  <object id="107" x="4" y="2" width="10" height="1276"/>
+  <object id="108" x="10" y="1254" width="1264" height="20"/>
+  <object id="109" x="1254" y="10" width="20" height="1262"/>
+  <object id="110" x="8" y="2" width="1266" height="14"/>
  </objectgroup>
- <layer name="Ground" width="40" height="40" opacity="0.72">
+ <layer name="Ground" width="40" height="40" opacity="0.68">
   <data encoding="base64" compression="zlib">
    eJztl9tOwzAMQA174FKJ+72wdQRGocD4/6/DkWo1s5w2LUnqBx6OpnVJc2anjnsFABdKuUYKZImsHJYROUFOkTNnndC5R45fKrjfGFL72VjdILfInUI/yx6yjyyYdwq/e+RhBGW7xvHEOIz1WyMvyIfAK/LMMAn9apaPVetn2DXK1Tqzn7TXyU/K89dMfhuWX+OJlUQqvx/mpcWvZr/XsFsL5vZzvTbQ7X+K5Vx+b+w6+fB4zh0/7sl5R5r2U6qBnCaS3wFyCN1Z1McicBzxFMGP+gv6r30UgeOkeVP9qL84h+Ge8TJwnDTvL/tvaO/lpgK5vmjyzNH/ESG9WemMpd6sEOaWnvuVPesPEVIzjTOWamchzPXVYNOzfiw/t0/K5beN6Gf74yaCH3/OYvmRg3SGNYnz+wldr+vzs2NK2O3fiSnPx3aEn9RbFJ5Y+c77lPHz+eWof9r9QnPEe7NcflPQ6Fcp99MUv4p9d98VvxX4DXlr9dOS33+/9H6PEP4umxv77vwLygOs7Q==
   </data>

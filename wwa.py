@@ -134,8 +134,11 @@ class Wwa():
 
     def update_sun(self):
         for s in self.suns:
-            s.update(-self.cowboy.movement_dict[self.cowboy.movement][0],
-                         -self.cowboy.movement_dict[self.cowboy.movement][1], self.cowboy.rect.x, self.cowboy.rect.y)
+            if not self.cowboy.is_step_back:
+                s.update(-self.cowboy.movement_dict[self.cowboy.movement][0],
+                         -self.cowboy.movement_dict[self.cowboy.movement][1])
+            else:
+                s.update(0, 0)
             s.draw(self.game_display)
 
     def check_sun_collide(self):
@@ -146,7 +149,7 @@ class Wwa():
     def main_loop(self):
         for s in levels[self.level-1][2]:
             self.suns.append(Sun(copy.copy(s)))
-        self.cowboy = Cowboy(pygame.Rect(15,15, 595, 595))
+        self.cowboy = Cowboy(pygame.Rect(15,15,610,610))
         self.background = pygame.Surface((42 * 32, 42 * 32))
         self.pics = pygame.Surface((42 * 32, 42 * 32))
         self.loop = True
@@ -156,6 +159,7 @@ class Wwa():
 
         while (self.loop):
             self.time -= 1;
+            self.cowboy.is_step_back = False
             for event in pygame.event.get():
                 pass
             layer_index = 0
@@ -188,6 +192,7 @@ class Wwa():
                             if pygame.Rect(obj.x + self.cowboy.pos_x, obj.y + self.cowboy.pos_y, obj.width,
                                            obj.height).colliderect(collision_rect) == True:
                                 self.cowboy.step_back()
+                                self.cowboy.is_step_back = True
                                 self.minus_life()
                                 break
             self.check_sun_collide()
