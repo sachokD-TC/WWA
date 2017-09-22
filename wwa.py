@@ -7,6 +7,16 @@ from players.cowboy import Cowboy
 from players.sun import Sun
 from sound_play import Sound_play as sound
 
+PIC_GAME_OVER_PNG = 'pic/game_over.png'
+
+LEVEL_COMPLETED_PNG = 'pic/level_completed.png'
+
+LEVEL_PNG = 'pic/level.png'
+
+CLOCK_PNG = 'pic/clock.png'
+
+SCORES_BROWN_PNG = 'pic/scores_brown.png'
+
 TIME_TAKEN_Y = 400
 
 LAYER_DONE_PERCENT = 500
@@ -64,10 +74,11 @@ class Wwa():
         self.game_display = pygame.display.set_mode((WIN_WIDTH, WIN_HEIGHT))
         self.teleports = None
         self.pytmx_map = load_pygame("map//" + levels[level - 1][LEVEL_INDEX] + ".tmx")
-        self.score_image = pygame.image.load('pic/scores_brown.png')
-        self.clock_image = pygame.image.load('pic/clock.png')
-        self.level_image = pygame.image.load('pic/level.png')
-        self.finish_background = pygame.image.load('pic/level_completed.png')
+        self.score_image = pygame.image.load(SCORES_BROWN_PNG)
+        self.clock_image = pygame.image.load(CLOCK_PNG)
+        self.level_image = pygame.image.load(LEVEL_PNG)
+        self.finish_background = pygame.image.load(LEVEL_COMPLETED_PNG)
+        self.game_over_pic = pygame.image.load(PIC_GAME_OVER_PNG)
         self.sound = sound(sound_on)
         self.sound_on = sound_on
         self.main_loop()
@@ -127,9 +138,14 @@ class Wwa():
                       (255, 255, 255))
         self.sound.play_hit_sound()
         if self.life <= 0:
-            self.sound.play_game_over_sound()
-            pygame.time.delay(3000)
+            self.show_game_over()
             self.loop = False
+
+    def show_game_over(self):
+        self.game_display.blit(self.game_over_pic, (190, 100))
+        pygame.display.update()
+        self.sound.play_game_over_sound()
+        pygame.time.delay(3000)
 
     def update_sun(self):
         for s in self.suns:
