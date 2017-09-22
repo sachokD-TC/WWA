@@ -81,8 +81,6 @@ class Wwa():
         for layer in self.pytmx_map.visible_layers:
             if layer.name == PIC_OBJS:
                 self.pic_obj_level = layer
-            if layer.name == TELEPORT_LEVEL:
-                self.teleports = layer
             if isinstance(layer, pytmx.TiledTileLayer):
                 for x in range(0, 40):
                     for y in range(0, 40):
@@ -150,7 +148,7 @@ class Wwa():
     def main_loop(self):
         for s in levels[self.level-1][2]:
             self.suns.append(Sun(copy.copy(s)))
-        self.cowboy = Cowboy(pygame.Rect(15,15,610,610))
+        self.cowboy = Cowboy()
         self.background = pygame.Surface((42 * 32, 42 * 32))
         self.pics = pygame.Surface((42 * 32, 42 * 32))
         self.loop = True
@@ -169,15 +167,13 @@ class Wwa():
                 if isinstance(layer, pytmx.TiledObjectGroup):
                     if layer.name == EXIT:
                         for obj in layer:
-                            collision_rect = pygame.Rect(self.cowboy.rect.x, self.cowboy.rect.y, 32, 32)
                             if pygame.Rect(obj.x + self.cowboy.pos_x, obj.y + self.cowboy.pos_y, obj.width,
-                                           obj.height).colliderect(collision_rect) == True:
+                                           obj.height).colliderect(self.cowboy.rect) == True:
                                 self.show_finish()
                     if layer.name == PIC_OBJS:
                         for obj in layer:
-                            collision_rect = pygame.Rect(self.cowboy.rect.x, self.cowboy.rect.y, 32, 32)
                             if pygame.Rect(obj.x + self.cowboy.pos_x, obj.y + self.cowboy.pos_y, obj.width,
-                                           obj.height).colliderect(collision_rect) == True:
+                                           obj.height).colliderect(self.cowboy.rect) == True:
                                 cactus = (round(obj.x / 32), round(obj.y / 32))
                                 if cactus not in self.rect:
                                     self.cactus_count += 1
@@ -189,9 +185,8 @@ class Wwa():
                                     break
                     if layer.name == BOXES:
                         for obj in layer:
-                            collision_rect = pygame.Rect(self.cowboy.rect.x, self.cowboy.rect.y, 32, 32)
                             if pygame.Rect(obj.x + self.cowboy.pos_x, obj.y + self.cowboy.pos_y, obj.width,
-                                           obj.height).colliderect(collision_rect) == True:
+                                           obj.height).colliderect(self.cowboy.rect) == True:
                                 self.cowboy.step_back()
                                 self.cowboy.is_step_back = True
                                 self.minus_life()

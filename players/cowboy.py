@@ -3,23 +3,16 @@ import players.constants as const
 
 
 class Cowboy(pygame.sprite.Sprite):
-    def __init__(self, box):
+    def __init__(self):
         pygame.sprite.Sprite.__init__(self)
-        self.box = box
         self.image = pygame.image.load('actors/right.png')
         self.rect = self.image.get_rect()
-        self.is_step_back = False
-        w = int(48)
-        h = int(65)
-        self.surface = pygame.Surface([w, h])
         self.actions = {const.LEFT: "left.png",
                         const.RIGHT: "right.png",
                         const.DOWN: "front.png",
                         const.UP: "back.png",
                         const.REST: "front.png"}
         self.action = "left"
-        self.index = 200
-        self.ind = 300
         self.rect.x = 50
         self.rect.y = 50
         self.pos_x = self.rect.x - 40

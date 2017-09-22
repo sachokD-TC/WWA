@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="2017.05.26" orientation="orthogonal" renderorder="right-down" width="40" height="40" tilewidth="32" tileheight="32" nextobjectid="514">
+<map version="2017.05.26" orientation="orthogonal" renderorder="right-down" width="40" height="40" tilewidth="32" tileheight="32" nextobjectid="518">
  <tileset firstgid="1" source="desert.tsx"/>
  <objectgroup name="boxes">
   <object id="292" x="172" y="35" width="263" height="78"/>
@@ -143,6 +143,10 @@
   <object id="450" x="236" y="1033" width="6" height="7"/>
   <object id="451" x="522" y="1105" width="4" height="2"/>
   <object id="452" x="659" y="1162" width="2" height="3"/>
+  <object id="514" x="0" y="-2" width="1278" height="14"/>
+  <object id="515" x="1257.58" y="0" width="18.1818" height="1269.7"/>
+  <object id="516" x="6.06061" y="1248.48" width="1269.7" height="21.2121"/>
+  <object id="517" x="0" y="3.0303" width="27.2727" height="1257.58"/>
  </objectgroup>
  <objectgroup name="pic_objs">
   <object id="441" x="291" y="177"/>
