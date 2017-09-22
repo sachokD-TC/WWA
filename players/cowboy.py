@@ -54,13 +54,13 @@ class Cowboy(pygame.sprite.Sprite):
             self.rect.y = 15
             self.pos_y = 15
             self.is_step_back = True
-        if self.rect.y > 610:
-            self.rect.y = 610
-            self.pos_y = -610
+        if self.rect.y > 615:
+            self.rect.y = 615
+            self.pos_y = -615
             self.is_step_back = True
-        if self.rect.x > 610:
-            self.rect.x = 610
-            self.pos_x = -610
+        if self.rect.x > 615:
+            self.rect.x = 615
+            self.pos_x = -615
             self.is_step_back = True
         else:
             self.rect.x += self.movement_dict[self.movement][0]
@@ -73,6 +73,7 @@ class Cowboy(pygame.sprite.Sprite):
         display.blit(self.image, self.rect)
 
     def step_back(self):
+        self.is_step_back = True
         self.rect.x -= self.movement_dict[self.movement][0]
         self.rect.y -= self.movement_dict[self.movement][1]
         self.pos_x += self.movement_dict[self.movement][0]
