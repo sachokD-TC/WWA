@@ -1,7 +1,14 @@
 import pygame
 import pytmx
 from pytmx.util_pygame import load_pygame
-from wwa import Wwa
+
+from com.wwa.main.wwa import Wwa
+
+MAP_MENU_BACKGROUND_TMX = "../map/menu_background.tmx"
+
+PIC_MENU_PNG = '../pic/menu.png'
+
+HATICON_PNG = '../pic/haticon.png'
 
 pygame.init()
 
@@ -19,8 +26,8 @@ class GameMenu():
         self.items = items
         self.font = pygame.font.SysFont(font, font_size)
         self.font_color = font_color
-        self.menu_image = pygame.image.load('pic/menu.png')
-        self.back_map = load_pygame("map//menu_background.tmx")
+        self.menu_image = pygame.image.load(PIC_MENU_PNG)
+        self.back_map = load_pygame(MAP_MENU_BACKGROUND_TMX)
 
         self.items = []
         for index, item in enumerate(items):
@@ -97,7 +104,7 @@ class GameMenu():
 if __name__ == "__main__":
     # Creating the screen
     screen = pygame.display.set_mode((800, 800), 0, 32)
-    icon = pygame.image.load('pic/haticon.png')
+    icon = pygame.image.load(HATICON_PNG)
     pygame.display.set_icon(icon)
 
     menu_items = ('Start', 'About', 'Quit')

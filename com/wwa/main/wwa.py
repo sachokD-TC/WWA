@@ -1,21 +1,27 @@
-import pytmx
-import pygame
 import copy
-from levels import levels
+
+import pygame
+import pytmx
 from pytmx.util_pygame import load_pygame
-from players.cowboy import Cowboy
-from players.sun import Sun
 from sound_play import Sound_play as sound
 
-PIC_GAME_OVER_PNG = 'pic/game_over.png'
+from com.wwa.main.levels import levels
+from com.wwa.players.cowboy import Cowboy
+from com.wwa.players.sun import Sun
 
-LEVEL_COMPLETED_PNG = 'pic/level_completed.png'
+TMW_DESERT_SPACING_PNG = '../map/tmw_desert_spacing.png'
 
-LEVEL_PNG = 'pic/level.png'
+PIC_ = '../pic/'
 
-CLOCK_PNG = 'pic/clock.png'
+PIC_GAME_OVER_PNG = '%sgame_over.png' % PIC_
 
-SCORES_BROWN_PNG = 'pic/scores_brown.png'
+LEVEL_COMPLETED_PNG = '%slevel_completed.png' % PIC_
+
+LEVEL_PNG = '%slevel.png' % PIC_
+
+CLOCK_PNG = '%sclock.png' % PIC_
+
+SCORES_BROWN_PNG = '%sscores_brown.png' % PIC_
 
 TIME_TAKEN_Y = 400
 
@@ -73,7 +79,7 @@ class Wwa():
             self.life = 10000
         self.game_display = pygame.display.set_mode((WIN_WIDTH, WIN_HEIGHT))
         self.teleports = None
-        self.pytmx_map = load_pygame("map//" + levels[level - 1][LEVEL_INDEX] + ".tmx")
+        self.pytmx_map = load_pygame("../map//" + levels[level - 1][LEVEL_INDEX] + ".tmx")
         self.score_image = pygame.image.load(SCORES_BROWN_PNG)
         self.clock_image = pygame.image.load(CLOCK_PNG)
         self.level_image = pygame.image.load(LEVEL_PNG)
@@ -99,7 +105,7 @@ class Wwa():
                         if image != None and (x, y) not in self.rect:
                             self.pics.blit(image, (32 * x, 32 * y))
                         else:
-                            surface_image = pygame.image.load('map//tmw_desert_spacing.png')
+                            surface_image = pygame.image.load(TMW_DESERT_SPACING_PNG)
                             self.pics.blit(surface_image, (32 * x, 32 * y), (5 * 32 + 6, 3 * 32 + 4, 32, 32))
 
     def show_level(self):
